@@ -3,12 +3,12 @@ require 'MultiCrossEntropyCriterion'
 
 local models = {}
 function models.cnnModel(k,c)
-    local k = k or 5
+    local k = k or 10
     local c = c or 36
 -- Will use "ceil" MaxPooling because we want to save as much
 -- space as we can
     local vgg = nn.Sequential()
-    vgg:add(nn.Reshape(1,50,170))
+    vgg:add(nn.Reshape(1,28,224))
 
     local backend_name = 'nn'
 
@@ -46,7 +46,7 @@ function models.cnnModel(k,c)
     ConvBNReLU(512,512)--:add(nn.Dropout(0.4,nil,true))
     ConvBNReLU(512,512)--:add(nn.Dropout(0.4,nil,true))
     ConvBNReLU(512,512)
-    vgg:add(MaxPooling(2,2,2,2):ceil())
+    vgg:add(MaxPooling(2,2,2,2))
     vgg:add(nn.View(512*2*6))
 
     classifier = nn.Sequential()

@@ -50,8 +50,11 @@ function data.loadX(dir,pfx,N,dH,dW)
     local dW = dW or 170
     local function readX(dir,i,b)
         local X = torch.zeros(b,dH,dW)
+        print('dH: ' .. dH .. ' W: ' .. dW)
         for j=i,i+b-1 do
-            X[j] = image.load(dir ..''..(pfx or '').. j ..'.png')[4]
+            --print(image.load(dir .. '' .. (pfx or '') .. j .. '.png'):size())
+            X[j] = image.load(dir ..''..(pfx or '').. j ..'.png')[1]
+            --if (i==1) then print(X[j]) end
         end
         return X
     end

@@ -47,13 +47,16 @@ function train.sgd(net,ct,Xt,Yt,Xv,Yv,K,sgd_config,batch)
     for k=1,K do
         local lloss = 0
         net:training()
-
+        print('EPOCH' .. k)
         for i=1,Nt,batch do
-            if(i%100*batch==1) then print(i,Nt) end
+            if(i%100*batch==1) then print(i , Nt) end
+            print(i)
             dx:zero()
             local j = math.min(i+batch-1,Nt)
             local Xb = Xt[{{i,j}}]:cuda()
             local Yb = Yt[{{i,j}}]:cuda()
+            print(Xb:size())
+            print(type(Xb))
             local out = net:forward(Xb)
             local loss = ct:forward(out,Yb)
             local dout = ct:backward(out,Yb)
