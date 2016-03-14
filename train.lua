@@ -50,13 +50,15 @@ function train.sgd(net,ct,Xt,Yt,Xv,Yv,K,sgd_config,batch)
         print('EPOCH' .. k)
         for i=1,Nt,batch do
             if(i%100*batch==1) then print(i , Nt) end
-            print(i)
+            
             dx:zero()
             local j = math.min(i+batch-1,Nt)
             local Xb = Xt[{{i,j}}]:cuda()
             local Yb = Yt[{{i,j}}]:cuda()
-            print(Xb:size())
-            print(type(Xb))
+            --print('Batch size: ' .. Xb:size(1))
+            --print('Batch shape:')
+            --print(Xb:size())
+
             local out = net:forward(Xb)
             local loss = ct:forward(out,Yb)
             local dout = ct:backward(out,Yb)
@@ -66,7 +68,7 @@ function train.sgd(net,ct,Xt,Yt,Xv,Yv,K,sgd_config,batch)
                 return loss,dx
             end
             local ltmp,tmp = optim.sgd(feval,x,sgd_config)
-            --print(loss)
+            print(loss)
             lloss = lloss + loss
         end
         print('loss..'..lloss)
