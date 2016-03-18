@@ -8,7 +8,7 @@ print('Loading images...')
 X,Y = data.loadXY(dir)
 print('Loaded ' .. X:size(1) .. ' images')
 
-Xt,Yt,Xv,Yv = data.split(X,Y,50)
+Xt,Yt,Xv,Yv = data.split(X,Y,math.floor(X:size(1)*0.15))
 --print(Yt[1])
 models = require 'models'
 net,ct = models.cnnModel(seq_len, num_classes, dataH,dataW)
