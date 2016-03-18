@@ -3,7 +3,10 @@ data = require 'data'
 dir = 'data/'
 seq_len, num_classes = 10, 36
 dataH, dataW = 120, 240
-X,Y = data.storeXY(dir,dataH,dataW,'captchaImage.')
+
+print('creating data.t7..')
+--X,Y = data.storeXY(dir,dataH,dataW,'captchaImage.')
+
 print('Loading images...')
 X,Y = data.loadXY(dir)
 print('Loaded ' .. X:size(1) .. ' images')
@@ -14,12 +17,23 @@ models = require 'models'
 net,ct = models.cnnModel(seq_len, num_classes, dataH,dataW)
 net=net:cuda()
 ct = ct:cuda()
-batchSize = 16
+batchSize = 1
 train = require 'train'
 sgd_config = {
 	   learningRate = 0.1,
 	      momentum = 0.9,
 }
+
+
+-- simulate a fixed memory on the GPU
+local freemem = cutorch.getMemoryUsage()
+local neededmem = 0.8 * 1024 * 1024 * 1024
+if freemem - neededmem > 4 then
+   reserved_tensor = torch.CudaTensor((freemem - neededmem) / 4):fill(0)
+end
+print('Free memory: ' .. cutorch.getMemoryUsage())
+
+
 print('STARTING TRAINING...')
 
 for i=1,20 do
