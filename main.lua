@@ -4,6 +4,7 @@ dir = 'data/'
 seq_len, num_classes = 10, 36
 dataH, dataW = 120, 240
 X,Y = data.storeXY(dir,dataH,dataW,'captchaImage.')
+print('Loading images...')
 X,Y = data.loadXY(dir)
 print('Loaded ' .. X:size(1) .. ' images')
 
@@ -20,7 +21,10 @@ sgd_config = {
 	      momentum = 0.9,
 }
 print('STARTING TRAINING...')
-train.sgd(net,ct,Xt,Yt,Xv,Yv,20,sgd_config,batchSize)
 
-torch.save('trained.t7', net)
-torch.save('ct.t7', ct)
+for i=1,20 do
+   train.sgd(net,ct,Xt,Yt,Xv,Yv,1,sgd_config,batchSize)
+   
+   torch.save('trained.t7', net)
+   torch.save('ct.t7', ct)
+end
