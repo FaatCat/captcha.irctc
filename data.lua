@@ -30,15 +30,19 @@ function data.loadY(dir)
     local csv = csvigo.load{path = dir .. 'ans.txt', mode = 'raw'}
     local Ystr = {}
     for i=1,#csv do
+        
         table.insert(Ystr,string.upper(csv[i][1]))
     end
+    
     local N = #Ystr
     local d = #Ystr[1]
     local Y = torch.zeros(N,d)
     local map = data.getMap()
     for i=1,N do
         for j=1,d do
+            
             local c = string.sub(Ystr[i],j,j)
+            
             Y[i][j] = map[c]
         end
     end
