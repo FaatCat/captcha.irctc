@@ -5,7 +5,7 @@ require 'cudnn'
 require 'nn'
 data = require 'data'
 dir = 'data/'
-X,Y = data.storeXY(dir,28,224,'captchaImage.')
+X,Y = data.storeXY(dir,120,240,'captchaImage.')
 X,Y = data.loadXY(dir)
 --Y = Y:cuda()
 local sample_data = 503
