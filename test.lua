@@ -1,6 +1,6 @@
 function output_to_label(output)
    local len = output:size(1)
-   print(output)
+   --print(output)
    local label = ""
    for i=1, len do
       local char = output[i][1]
@@ -19,8 +19,8 @@ require 'cunn'
 require 'cudnn'
 require 'nn'
 
-model = torch.load('trained.t7')
-ct = torch.load('ct.t7')
+model = torch.load(arg[2])
+--ct = torch.load('ct.t7')
 
 model:evaluate()
 model:cuda()
@@ -31,11 +31,11 @@ require 'image'
 local batch = image.load(arg[1]):cuda()
 
 out = model:forward(batch)
-print(out:size())
+--print(out:size())
 local tmp, maxoutput = out:max(3)
 maxxoutput=maxoutput:double()
-print(maxoutput)
+--print(maxoutput)
 
 local outseq = output_to_label(maxoutput[1])
-print('Output: ')
+--print('Output: ')
 print(outseq)
