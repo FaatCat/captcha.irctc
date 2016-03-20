@@ -44,12 +44,12 @@ function train.sgd(net,ct,Xt,Yt,Xv,Yv,K,sgd_config,batch)
     local Nt = Yt:size(1)
     print('parameters size ..')
     print(#x)
-    for k=1,K do
+    for k=K,K do
         local lloss = 0
         net:training()
-        print('EPOCH' .. k)
+        print('EPOCH #' .. k)
         for i=1,Nt,batch do
-            if(i%100*batch==1) then print('EPOCH ' .. k .. '(' i .. '/' ..  Nt .. ')') end
+            if(i%100*batch==1) then print('EPOCH ' .. k .. '(' .. i .. '/' ..  Nt .. ')' .. lloss/i) end
             
             dx:zero()
             local j = math.min(i+batch-1,Nt)
@@ -68,7 +68,7 @@ function train.sgd(net,ct,Xt,Yt,Xv,Yv,K,sgd_config,batch)
                 return loss,dx
             end
             local ltmp,tmp = optim.sgd(feval,x,sgd_config)
-            print(loss)
+            --print(loss)
             lloss = lloss + loss
         end
         print('loss..'..lloss)
