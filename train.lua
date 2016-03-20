@@ -3,10 +3,10 @@ require 'nn';
 local train = {}
 
 
-function train.accuracy(Xv,Yv,net,batch)
+function train.accuracy(Xv,Yv,net,batch, Nv)
     net:evaluate()
     local batch = batch or 64
-    local Nv = Xv:size(1)
+    local Nv = Nv or Xv:size(1)
     local lloss = 0
     for i =1,Nv,batch do
         local j = math.min(i+batch-1,Nv)
@@ -41,7 +41,7 @@ function train.sgd(net,ct,Xt,Yt,Xv,Yv,K,sgd_config,batch)
     local x,dx = net:getParameters()
     require 'optim'
     local batch = batch or 64
-    local Nt = Xt:size(1)
+    local Nt = Yt:size(1)
     print('parameters size ..')
     print(#x)
     for k=1,K do
@@ -73,7 +73,7 @@ function train.sgd(net,ct,Xt,Yt,Xv,Yv,K,sgd_config,batch)
         end
         print('loss..'..lloss)
         print('valid .. '.. train.accuracy(Xv,Yv,net,batch))
-        print('train .. '.. train.accuracy(Xt,Yt,net,batch))
+        print('train .. '.. train.accuracy(Xt,Yt,net,batch, 1000))
         --print('valid .. '.. train.accuracyK(Xv,Yv,net,batch))
         --print('train .. '.. train.accuracyK(Xt,Yt,net,batch))
     end
