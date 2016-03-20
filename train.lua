@@ -49,7 +49,7 @@ function train.sgd(net,ct,Xt,Yt,Xv,Yv,K,sgd_config,batch)
         net:training()
         print('EPOCH' .. k)
         for i=1,Nt,batch do
-            if(i%100*batch==1) then print(i , Nt) end
+            if(i%100*batch==1) then print('EPOCH ' .. k .. '(' i .. '/' ..  Nt .. ')') end
             
             dx:zero()
             local j = math.min(i+batch-1,Nt)
@@ -74,8 +74,8 @@ function train.sgd(net,ct,Xt,Yt,Xv,Yv,K,sgd_config,batch)
         print('loss..'..lloss)
         print('valid .. '.. train.accuracy(Xv,Yv,net,batch))
         print('train .. '.. train.accuracy(Xt,Yt,net,batch))
-        print('valid .. '.. train.accuracyK(Xv,Yv,net,batch))
-        print('train .. '.. train.accuracyK(Xt,Yt,net,batch))
+        --print('valid .. '.. train.accuracyK(Xv,Yv,net,batch))
+        --print('train .. '.. train.accuracyK(Xt,Yt,net,batch))
     end
 end
 
