@@ -31,12 +31,12 @@ function models.cnnModel(k,c, h, w)
     vgg:add(MaxPooling(2,2,2,2):ceil())
 
     ConvBNReLU(128,256)--:add(nn.Dropout(0.4,nil,true))
-    ConvBNReLU(256,256)--:add(nn.Dropout(0.4,nil,true))
+    --ConvBNReLU(256,256)--:add(nn.Dropout(0.4,nil,true))
     ConvBNReLU(256,256)
     vgg:add(MaxPooling(2,2,2,2):ceil())
 
     ConvBNReLU(256,512)--:add(nn.Dropout(0.4,nil,true))
-    ConvBNReLU(512,512)--:add(nn.Dropout(0.4,nil,true))
+    --ConvBNReLU(512,512)--:add(nn.Dropout(0.4,nil,true))
     ConvBNReLU(512,512)
     vgg:add(MaxPooling(2,2,2,2):ceil())
 
@@ -44,7 +44,7 @@ function models.cnnModel(k,c, h, w)
     -- the kernels and cudnn doesn't handle that, have to use cunn
     backend = nn
     ConvBNReLU(512,512)--:add(nn.Dropout(0.4,nil,true))
-    ConvBNReLU(512,512)--:add(nn.Dropout(0.4,nil,true))
+    --ConvBNReLU(512,512)--:add(nn.Dropout(0.4,nil,true))
     ConvBNReLU(512,512)
     vgg:add(MaxPooling(2,2,2,2))
     local magicNum = 512*4*7--*16
