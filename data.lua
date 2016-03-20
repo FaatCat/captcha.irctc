@@ -49,6 +49,22 @@ function data.loadY(dir)
     return Y
 end
 
+function data.loadXn(dir, pfx, nstart, nend, dH, dW)
+    local dH = dH or 120
+    local dW = dW or 240
+    local function readX(dir, from, to)
+        local X = torch.zeros(to-from+1,dH,dW)
+        --print('dH: ' .. dH .. ' W: ' .. dW)
+        for j=from,from+to-from do
+            --print(image.load(dir .. '' .. (pfx or '') .. j .. '.png'):size())
+            X[j-from+1] = image.load(dir ..''..(pfx or '').. j ..'.png')[1]
+            --if (i==1) then print(X[j]) end
+        end
+        return X
+    end
+    return readX(dir,nstart,nend)
+end
+
 function data.loadX(dir,pfx,N,dH,dW)
     local dH = dH or 50
     local dW = dW or 170
